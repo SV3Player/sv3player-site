@@ -106,7 +106,12 @@ If you chose to add a server during onboarding (or later from Settings):
 5. Tap **Test Connection** to verify everything works
 6. Tap **Save**
 
-For detailed setup instructions for each service type, see the [Service Guides](/docs/services/).
+For detailed setup instructions, see the guide for your service:
+[Stash](/docs/services/stash/) ·
+[Plex](/docs/services/plex/) ·
+[Emby](/docs/services/emby/) ·
+[Jellyfin](/docs/services/jellyfin/) ·
+[Custom GraphQL](/docs/services/custom-graphql/)
 
 ---
 
@@ -115,16 +120,13 @@ For detailed setup instructions for each service type, see the [Service Guides](
 Once connected, here's how to get around:
 
 ### Feed View
-The main screen shows your video library in a vertical feed. Swipe up to see more content, or tap a video to start playback.
+The main screen shows your video library in a vertical feed. Swipe up and down to browse content. Tap a video to start playback.
 
 ### Player Controls
-- **Swipe up** — Next video
-- **Swipe down** — Previous video
-- **Tap** — Show/hide controls
-- **Double-tap sides** — Skip forward/backward
-
-### Queue
-Build a playlist by adding videos to your queue. Access the queue from the player controls to see what's coming up, reorder items, or enable shuffle.
+- **Swipe up/down** — Next/previous video
+- **Double-tap** — Play/pause
+- **Tap** — Show/hide controls overlay
+- **Swipe from left edge** — Return to feed
 
 ### Filters
 Narrow down your library using filters. Filter by tags, performers, studios, ratings, duration, and more depending on your server's metadata.
@@ -133,5 +135,5 @@ Narrow down your library using filters. Filter by tags, performers, studios, rat
 
 ## Next Steps
 
-- **[Service Guides](/docs/services/)** — Detailed setup for Stash, Plex, Emby, Jellyfin, and Custom GraphQL
+- **Service Guides** — [Stash](/docs/services/stash/) · [Plex](/docs/services/plex/) · [Emby](/docs/services/emby/) · [Jellyfin](/docs/services/jellyfin/) · [Custom GraphQL](/docs/services/custom-graphql/)
 - **[Privacy Policy](/privacy/)** — How SV3 Player handles your data
