@@ -1,0 +1,19 @@
+image: node:20
+
+variables:
+  HUGO_VERSION: "0.139.0"
+
+before_script:
+  - apt-get update && apt-get install -y wget
+  - wget -O hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+  - dpkg -i hugo.deb
+  - npm ci
+
+pages:
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
