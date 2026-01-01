@@ -5,7 +5,7 @@ default:
     - website
 
 variables:
-  HUGO_VERSION: "0.139.0"
+  HUGO_VERSION: "0.141.0"
 
 before_script:
   - apt-get update && apt-get install -y wget
