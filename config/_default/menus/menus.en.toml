@@ -30,8 +30,7 @@
 
 [[main]]
   name = "Docs"
-  url = "/docs/guides/example-guide/"
-# url = "/docs/1.0/prologue/introduction/"
+  pageRef = "/docs"
   weight = 10
 
 [[main]]
@@ -64,20 +63,15 @@
 #   url = "https://www.linkedin.com/"
 #   weight = 40
 
-# [[sidebar_docs]]
-#   name = "Guides"
-#   pageRef = "/docs/guides"
-#   weight = 10
-#
-# [[sidebar_docs]]
-#   name = "Reference"
-#   pageRef = "/docs/reference"
-#   weight = 20
-#
-# [[sidebar_docs]]
-#   name = "Resources"
-#   pageRef = "/docs/resources"
-#   weight = 30
+[[sidebar_docs]]
+  name = "Getting Started"
+  pageRef = "/docs/getting-started"
+  weight = 10
+
+[[sidebar_docs]]
+  name = "Service Guides"
+  pageRef = "/docs/services"
+  weight = 20
 
 [[footer]]
   name = "Privacy Policy"
