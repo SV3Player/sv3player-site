@@ -16,37 +16,19 @@ seo:
 
 SV3 Player brings together all your media servers into a single, elegant iOS experience. No more switching between apps — manage and play your entire library from one place.
 
-{{< link-card title="Get Started" href="/docs/getting-started/" icon="rocket" >}}
-Read the documentation to set up your first server connection.
-{{< /link-card >}}
+[Get Started →](/docs/getting-started/)
 
 ---
 
 ## Supported Services
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
-
-{{< card title="Stash" icon="database" >}}
-Full GraphQL integration with your Stash media server. Browse scenes, performers, tags, and studios.
-{{< /card >}}
-
-{{< card title="Plex" icon="brand-apple" >}}
-Connect to your Plex Media Server. Browse libraries, search content, and stream directly.
-{{< /card >}}
-
-{{< card title="Emby" icon="server" >}}
-Full Emby server support with library browsing, filtering, and playback.
-{{< /card >}}
-
-{{< card title="Jellyfin" icon="server-2" >}}
-Open-source Jellyfin server integration with complete library access.
-{{< /card >}}
-
-{{< card title="Custom GraphQL" icon="code" >}}
-Connect to any GraphQL endpoint with configurable field mappings and queries.
-{{< /card >}}
-
-</div>
+| Service | Description |
+|---------|-------------|
+| **Stash** | Full GraphQL integration with your Stash media server. Browse scenes, performers, tags, and studios. |
+| **Plex** | Connect to your Plex Media Server. Browse libraries, search content, and stream directly. |
+| **Emby** | Full Emby server support with library browsing, filtering, and playback. |
+| **Jellyfin** | Open-source Jellyfin server integration with complete library access. |
+| **Custom GraphQL** | Connect to any GraphQL endpoint with configurable field mappings and queries. |
 
 ---
 
@@ -64,18 +46,12 @@ Connect to any GraphQL endpoint with configurable field mappings and queries.
 
 SV3 Player is available on the App Store for iPhone and iPad.
 
-{{< link-card title="Download on the App Store" href="#" icon="brand-apple" >}}
-Coming soon to the App Store.
-{{< /link-card >}}
+*Coming soon to the App Store.*
 
 ---
 
 ## Documentation
 
-{{< link-card title="Getting Started" href="/docs/getting-started/" icon="book" >}}
-Learn how to set up SV3 Player and connect your first server.
-{{< /link-card >}}
-
-{{< link-card title="Service Guides" href="/docs/services/" icon="plug" >}}
-Detailed setup instructions for each supported service.
-{{< /link-card >}}
+- [Getting Started](/docs/getting-started/) — Learn how to set up SV3 Player and connect your first server.
+- [Service Guides](/docs/services/) — Detailed setup instructions for each supported service.
+- [Privacy Policy](/privacy/) — How SV3 Player handles your data.

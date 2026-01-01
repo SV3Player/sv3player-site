@@ -48,6 +48,11 @@
   source = "node_modules/@thulite/inline-svg/layouts"
   target = "layouts"
 
+## shortcodes
+[[mounts]]
+  source = "node_modules/@thulite/doks-core/layouts/_shortcodes"
+  target = "layouts/shortcodes"
+
 ## i18n
 [[mounts]]
   source = "node_modules/@thulite/doks-core/i18n"
