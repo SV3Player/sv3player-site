@@ -1,5 +1,9 @@
 image: node:20
 
+default:
+  tags:
+    - website
+
 variables:
   HUGO_VERSION: "0.139.0"
 
