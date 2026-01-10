@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="text-xl font-bold">
           SV3 Player
@@ -56,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-white dark:bg-gray-950`}
       >
         <Header />
         <main className="flex-1">
