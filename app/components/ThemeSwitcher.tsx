@@ -89,12 +89,11 @@ export function ThemeSwitcher() {
                   setTheme(t.id);
                   setIsOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${
-                  theme.id === t.id ? 'ring-2' : 'hover:bg-white/5'
-                }`}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all hover:bg-white/5"
                 style={{
-                  ringColor: theme.id === t.id ? 'var(--theme-accent)' : undefined,
                   backgroundColor: theme.id === t.id ? 'var(--theme-control-background)' : undefined,
+                  outline: theme.id === t.id ? '2px solid var(--theme-accent)' : undefined,
+                  outlineOffset: theme.id === t.id ? '2px' : undefined,
                 }}
               >
                 {/* Theme color swatches */}
