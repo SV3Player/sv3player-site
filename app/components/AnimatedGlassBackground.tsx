@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { useTheme } from './ThemeProvider';
 
 interface Blob {
   id: number;
@@ -12,6 +13,7 @@ interface Blob {
   minSizeRatio: number;
   clockwise: boolean;
   speedMultiplier: number;
+  colorIndex: number; // 0=primary, 1=secondary, 2=accent
 }
 
 interface ScatteredBubble {
@@ -20,12 +22,12 @@ interface ScatteredBubble {
   y: number;
   size: number;
   opacity: number;
+  colorIndex: number;
 }
 
 interface AnimatedGlassBackgroundProps {
   blobCount?: number;
   speed?: number;
-  tintColor?: string;
   className?: string;
   height?: string;
 }
@@ -35,10 +37,10 @@ const STORAGE_KEY = 'sv3-animation-enabled';
 export function AnimatedGlassBackground({
   blobCount = 10,
   speed = 0.25,
-  tintColor = 'rgba(59, 130, 246, 0.25)',
   className = '',
   height = '600px',
 }: AnimatedGlassBackgroundProps) {
+  const { theme } = useTheme();
   const [currentTime, setCurrentTime] = useState(0);
   const [enabled, setEnabled] = useState(true);
   const [mounted, setMounted] = useState(false);
@@ -61,6 +63,14 @@ export function AnimatedGlassBackground({
     localStorage.setItem(STORAGE_KEY, String(newValue));
   }, [enabled]);
 
+  // Get theme colors as array for cycling
+  const themeColors = useMemo(() => [
+    theme.colors.primary,
+    theme.colors.secondary,
+    theme.colors.accent,
+    theme.colors.glassEffectTint,
+  ], [theme.colors.primary, theme.colors.secondary, theme.colors.accent, theme.colors.glassEffectTint]);
+
   // Generate blobs once on mount - BIGGER sizes
   const blobs = useMemo<Blob[]>(() => {
     return Array.from({ length: blobCount }, (_, i) => ({
@@ -73,6 +83,7 @@ export function AnimatedGlassBackground({
       minSizeRatio: 0.1 + Math.random() * 0.1, // 0.1-0.2 (bigger minimum)
       clockwise: Math.random() > 0.5,
       speedMultiplier: 0.3 + Math.random() * 1.0, // 0.3-1.3
+      colorIndex: i % 4, // Cycle through 4 theme colors
     }));
   }, [blobCount]);
 
@@ -86,6 +97,7 @@ export function AnimatedGlassBackground({
         y: Math.abs(Math.cos(seed * 1.3) % 1) * 100,
         size: 20 * (0.5 + Math.abs(Math.sin(seed * 0.7)) * 1.5), // bigger
         opacity: 0.1 + Math.abs(Math.cos(seed * 0.9)) * 0.15,
+        colorIndex: i % 4,
       };
     });
   }, []);
@@ -108,6 +120,41 @@ export function AnimatedGlassBackground({
       }
     };
   }, [enabled]);
+
+  // Calculate moving light bar position (diagonal sweep across the scene)
+  // Returns percentage-based position for viewport awareness
+  const getLightPosition = (time: number) => {
+    // Linear sweep from left to right, then wrap
+    const period = 14; // 14 seconds for a full sweep
+    const t = (time % period) / period; // 0 to 1, then wraps
+
+    // Start and end well off-screen (-30% to 130% of viewport)
+    // This ensures the bar is invisible when it wraps
+    const xPercent = -30 + t * 160; // -30% to 130%
+    // Slight vertical movement to match diagonal angle
+    const yPercent = -15 + t * 30; // -15% to 15%
+
+    return { xPercent, yPercent };
+  };
+
+  // Calculate specular highlight offset based on light position relative to blob
+  const getHighlightOffset = (blobX: number, blobY: number, blobSize: number, lightX: number, lightY: number) => {
+    // Vector from blob to light
+    const dx = lightX - blobX;
+    const dy = lightY - blobY;
+
+    // Normalize and scale - highlight appears on the side facing the light
+    const distance = Math.sqrt(dx * dx + dy * dy) || 1;
+    const normalizedX = dx / distance;
+    const normalizedY = dy / distance;
+
+    // Highlight offset: towards the light, but not too far from center
+    const offsetScale = blobSize * 0.2;
+    return {
+      offsetX: normalizedX * offsetScale,
+      offsetY: normalizedY * offsetScale - blobSize * 0.1, // bias slightly upward
+    };
+  };
 
   // Calculate orbital position for a blob
   const getOrbitalPosition = (blob: Blob, time: number) => {
@@ -145,7 +192,12 @@ export function AnimatedGlassBackground({
       {/* Toggle button */}
       <button
         onClick={toggleAnimation}
-        className="absolute top-4 right-4 z-20 px-3 py-1.5 text-xs rounded-full bg-white/20 dark:bg-gray-800/40 backdrop-blur-sm border border-white/20 hover:bg-white/30 dark:hover:bg-gray-700/50 transition-colors text-gray-600 dark:text-gray-300"
+        className="absolute top-4 right-4 z-20 px-3 py-1.5 text-xs rounded-full backdrop-blur-sm border transition-colors"
+        style={{
+          backgroundColor: 'var(--theme-control-background)',
+          borderColor: 'rgba(255,255,255,0.2)',
+          color: 'var(--theme-control-foreground)',
+        }}
         aria-label={enabled ? 'Disable animation' : 'Enable animation'}
       >
         {enabled ? 'Pause' : 'Play'} Animation
@@ -192,27 +244,74 @@ export function AnimatedGlassBackground({
             </defs>
           </svg>
 
-          {/* Scattered background bubbles */}
+          {/* Scattered background bubbles with theme colors */}
           <div className="absolute inset-0">
-            {scatteredBubbles.map((bubble) => (
+            {scatteredBubbles.map((bubble) => {
+              const bubbleColor = themeColors[bubble.colorIndex];
+              return (
+                <div
+                  key={`bubble-${bubble.id}`}
+                  className="absolute rounded-full"
+                  style={{
+                    left: `${bubble.x}%`,
+                    top: `${bubble.y}%`,
+                    width: bubble.size,
+                    height: bubble.size,
+                    background: `
+                      radial-gradient(ellipse at 25% 15%, rgba(255,255,255,0.4) 0%, transparent 40%)
+                    `,
+                    border: `1px solid ${bubbleColor}`,
+                    boxShadow: `0 0 ${bubble.size * 0.3}px ${bubbleColor}40`,
+                    backdropFilter: 'blur(6px)',
+                    WebkitBackdropFilter: 'blur(6px)',
+                    opacity: bubble.opacity + 0.3,
+                  }}
+                />
+              );
+            })}
+          </div>
+
+          {/* Moving diagonal light bar */}
+          {(() => {
+            const light = getLightPosition(currentTime);
+            return (
               <div
-                key={`bubble-${bubble.id}`}
-                className="absolute rounded-full"
+                className="absolute pointer-events-none will-change-transform"
                 style={{
-                  left: `${bubble.x}%`,
-                  top: `${bubble.y}%`,
-                  width: bubble.size,
-                  height: bubble.size,
-                  background: `
-                    radial-gradient(ellipse at 25% 15%, rgba(255,255,255,0.4) 0%, transparent 40%)
-                  `,
-                  border: '1px solid rgba(255,255,255,0.25)',
-                  backdropFilter: 'blur(6px)',
-                  WebkitBackdropFilter: 'blur(6px)',
-                  opacity: bubble.opacity + 0.3,
+                  left: `${light.xPercent}%`,
+                  top: `${light.yPercent}%`,
+                  width: '15%',
+                  minWidth: 150,
+                  height: '150%',
+                  transform: 'translate(-50%, -50%) rotate(25deg)',
+                  background: `linear-gradient(90deg, transparent 0%, ${theme.colors.secondary}15 30%, ${theme.colors.secondary}20 50%, ${theme.colors.secondary}15 70%, transparent 100%)`,
+                  filter: 'blur(60px)',
                 }}
               />
-            ))}
+            );
+          })()}
+
+          {/* Subtle color glow layer behind blobs */}
+          <div className="absolute inset-0 pointer-events-none">
+            {blobs.map((blob) => {
+              const { x, y, size } = getOrbitalPosition(blob, currentTime);
+              const glowColor = themeColors[blob.colorIndex];
+              return (
+                <div
+                  key={`blob-glow-${blob.id}`}
+                  className="absolute rounded-full will-change-transform"
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                    width: size * 1.5,
+                    height: size * 1.5,
+                    transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                    background: `radial-gradient(circle, ${glowColor}30 0%, transparent 70%)`,
+                    filter: 'blur(20px)',
+                  }}
+                />
+              );
+            })}
           </div>
 
           {/* Glass fill layer with metaball merge + refraction */}
@@ -222,6 +321,7 @@ export function AnimatedGlassBackground({
           >
             {blobs.map((blob) => {
               const { x, y, size } = getOrbitalPosition(blob, currentTime);
+              const blobColor = themeColors[blob.colorIndex];
               return (
                 <div
                   key={`blob-fill-${blob.id}`}
@@ -232,7 +332,7 @@ export function AnimatedGlassBackground({
                     width: size,
                     height: size,
                     transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-                    background: 'rgba(255,255,255,0.1)',
+                    background: `linear-gradient(135deg, rgba(255,255,255,0.15) 0%, ${blobColor}15 100%)`,
                     backdropFilter: 'blur(12px) saturate(1.2)',
                     WebkitBackdropFilter: 'blur(12px) saturate(1.2)',
                   }}
@@ -265,25 +365,42 @@ export function AnimatedGlassBackground({
             })}
           </div>
 
-          {/* Specular highlights */}
+          {/* Specular highlights that track the moving light source */}
           <div className="absolute inset-0 pointer-events-none">
-            {blobs.map((blob) => {
-              const { x, y, size } = getOrbitalPosition(blob, currentTime);
-              return (
-                <div
-                  key={`blob-highlight-${blob.id}`}
-                  className="absolute rounded-full will-change-transform"
-                  style={{
-                    left: '50%',
-                    top: '50%',
-                    width: size * 0.6,
-                    height: size * 0.4,
-                    transform: `translate(calc(-50% + ${x - size * 0.12}px), calc(-50% + ${y - size * 0.22}px))`,
-                    background: `radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.35) 0%, transparent 70%)`,
-                  }}
-                />
-              );
-            })}
+            {(() => {
+              const light = getLightPosition(currentTime);
+              // Convert percentage to approximate pixel position relative to center
+              // Using 800 as a reference width for calculations
+              const lightX = (light.xPercent - 50) * 8;
+              const lightY = (light.yPercent - 50) * 5;
+
+              return blobs.map((blob) => {
+                const { x, y, size } = getOrbitalPosition(blob, currentTime);
+                const { offsetX, offsetY } = getHighlightOffset(x, y, size, lightX, lightY);
+                const highlightColor = themeColors[blob.colorIndex];
+
+                // Calculate highlight intensity based on distance to light
+                const dx = lightX - x;
+                const dy = lightY - y;
+                const distanceToLight = Math.sqrt(dx * dx + dy * dy);
+                const intensity = Math.max(0.2, Math.min(0.5, 400 / (distanceToLight + 200)));
+
+                return (
+                  <div
+                    key={`blob-highlight-${blob.id}`}
+                    className="absolute rounded-full will-change-transform"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                      width: size * 0.5,
+                      height: size * 0.35,
+                      transform: `translate(calc(-50% + ${x + offsetX}px), calc(-50% + ${y + offsetY}px))`,
+                      background: `radial-gradient(ellipse at 50% 50%, rgba(255,255,255,${intensity}) 0%, ${highlightColor}20 50%, transparent 70%)`,
+                    }}
+                  />
+                );
+              });
+            })()}
           </div>
 
         </>
@@ -292,7 +409,7 @@ export function AnimatedGlassBackground({
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse at center top, ${tintColor} 0%, transparent 70%)`,
+            background: `radial-gradient(ellipse at center top, ${theme.colors.glassEffectTint} 0%, transparent 70%)`,
             opacity: 0.3,
           }}
         />
