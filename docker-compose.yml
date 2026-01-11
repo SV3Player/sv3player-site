@@ -4,7 +4,7 @@ services:
     container_name: sv3-player-site
     restart: unless-stopped
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:4444:3000"
     environment:
       - NODE_ENV=production
     healthcheck:
