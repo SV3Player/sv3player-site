@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Stash Setup Guide - SV3 Player",
-  description: "Learn how to connect SV3 Player to your Stash media server.",
+  description: "Connect SV3 Player to your Stash media organizer with full GraphQL integration.",
 };
 
 export default function StashGuidePage() {
@@ -30,96 +30,212 @@ export default function StashGuidePage() {
           Stash
         </h1>
         <p className="mb-8 text-lg" style={{ color: 'var(--theme-text-secondary)' }}>
-          Stash is a self-hosted media organizer with a powerful GraphQL API. SV3 Player provides full integration with Stash servers, letting you browse and play your entire library from your iOS device.
+          Stash is a self-hosted media organizer with a powerful GraphQL API. SV3 Player connects to your Stash server and supports write-back for tags, performers, and ratings.
         </p>
 
         <section className="mb-10">
           <h2
-            className="text-2xl font-semibold mb-4 pb-2 border-b"
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
             style={{
-              color: 'var(--theme-text-primary)',
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-primary) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
               borderColor: 'var(--theme-control-background)',
             }}
           >
-            Requirements
+            Overview
           </h2>
-          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li>Stash server running and accessible from your iOS device</li>
-            <li>API key generated in Stash settings</li>
-            <li>Network access to your server (local network, VPN, or exposed endpoint)</li>
-          </ul>
+          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            Stash uses a GraphQL API that gives SV3 Player rich access to your media library. Unlike other services,
+            Stash supports bi-directional sync — you can browse and edit your library directly from the app.
+          </p>
+          <p style={{ color: 'var(--theme-text-secondary)' }}>
+            Authentication uses API keys generated in your Stash server settings. No username or password required.
+          </p>
         </section>
 
         <section className="mb-10">
           <h2
-            className="text-2xl font-semibold mb-4 pb-2 border-b"
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
             style={{
-              color: 'var(--theme-text-primary)',
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-secondary) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            Quick Start
+          </h2>
+          <ol className="list-decimal list-inside space-y-3" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Open SV3 Player and go to <strong style={{ color: 'var(--theme-text-primary)' }}>Settings</strong> → <strong style={{ color: 'var(--theme-text-primary)' }}>Service Connections</strong></li>
+            <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Add Connection</strong></li>
+            <li>Select <strong style={{ color: 'var(--theme-text-primary)' }}>Stash</strong></li>
+            <li>Enter your server URL (e.g., <code className="px-1 rounded text-sm" style={{ backgroundColor: 'var(--theme-surface)', color: 'var(--theme-accent)' }}>192.168.1.100:9999</code>)</li>
+            <li>Enter your API key</li>
+            <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Connect</strong> to test, then <strong style={{ color: 'var(--theme-text-primary)' }}>Save</strong></li>
+          </ol>
+        </section>
+
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
+            style={{
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-accent) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
               borderColor: 'var(--theme-control-background)',
             }}
           >
             Getting Your API Key
           </h2>
-          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>Before connecting, you&apos;ll need an API key from your Stash server:</p>
+          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            Before connecting, generate an API key from your Stash server:
+          </p>
           <ol className="list-decimal list-inside space-y-2 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li>Open your Stash web interface in a browser</li>
+            <li>Open your Stash web interface</li>
             <li>Click the <strong style={{ color: 'var(--theme-text-primary)' }}>gear icon</strong> to open Settings</li>
-            <li>Navigate to <strong style={{ color: 'var(--theme-text-primary)' }}>Security</strong></li>
+            <li>Navigate to the <strong style={{ color: 'var(--theme-text-primary)' }}>Security</strong> tab</li>
             <li>Under <strong style={{ color: 'var(--theme-text-primary)' }}>Authentication</strong>, find the API Keys section</li>
-            <li>Click <strong style={{ color: 'var(--theme-text-primary)' }}>Generate</strong> to create a new key, or copy an existing one</li>
-            <li>Save this key — you&apos;ll need it for SV3 Player</li>
+            <li>Click <strong style={{ color: 'var(--theme-text-primary)' }}>Generate</strong> to create a new key</li>
+            <li>Copy the key — you&apos;ll need it for SV3 Player</li>
           </ol>
-          <p className="italic" style={{ color: 'var(--theme-text-tertiary)' }}>
-            Tip: Give your API key a descriptive name like &quot;SV3 Player&quot; so you can identify it later.
-          </p>
+          <div
+            className="p-4 rounded-lg mt-4"
+            style={{
+              backgroundColor: 'var(--theme-surface)',
+              border: '1px solid var(--theme-info)',
+            }}
+          >
+            <p className="text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
+              <strong style={{ color: 'var(--theme-info)' }}>Tip:</strong> Give your API key a descriptive name like &quot;SV3 Player&quot; so you can identify it later. SV3 Player includes an &quot;Open Settings&quot; button that opens your Stash security settings directly.
+            </p>
+          </div>
+          <div
+            className="p-4 rounded-lg mt-4"
+            style={{
+              backgroundColor: 'var(--theme-surface)',
+              border: '1px solid var(--theme-warning)',
+            }}
+          >
+            <p className="text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
+              <strong style={{ color: 'var(--theme-warning)' }}>Note:</strong> Mobile browsers may not allow copying API keys directly from the Stash web interface. If you can&apos;t copy the key, try accessing Stash from a desktop browser, or manually type the key.
+            </p>
+          </div>
         </section>
 
         <section className="mb-10">
           <h2
-            className="text-2xl font-semibold mb-4 pb-2 border-b"
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
             style={{
-              color: 'var(--theme-text-primary)',
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-info) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
               borderColor: 'var(--theme-control-background)',
             }}
           >
-            Connection Steps
+            Server URL
           </h2>
-          <ol className="list-decimal list-inside space-y-2 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li>Open SV3 Player and go to <strong style={{ color: 'var(--theme-text-primary)' }}>Settings</strong> → <strong style={{ color: 'var(--theme-text-primary)' }}>Service Connections</strong></li>
-            <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Add Service</strong></li>
-            <li>Select <strong style={{ color: 'var(--theme-text-primary)' }}>Stash</strong> from the service list</li>
-            <li>Enter your server details:
-              <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
-                <li><strong style={{ color: 'var(--theme-text-primary)' }}>Server URL</strong> — Your Stash server address (e.g., <code className="px-1 rounded text-sm" style={{ backgroundColor: 'var(--theme-surface)', color: 'var(--theme-accent)' }}>192.168.1.100:9999</code> or <code className="px-1 rounded text-sm" style={{ backgroundColor: 'var(--theme-surface)', color: 'var(--theme-accent)' }}>stash.yourdomain.com</code>)</li>
-                <li><strong style={{ color: 'var(--theme-text-primary)' }}>API Key</strong> — The key you generated above</li>
-              </ul>
-            </li>
-            <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Test Connection</strong> to verify</li>
-            <li>If successful, tap <strong style={{ color: 'var(--theme-text-primary)' }}>Save</strong></li>
-          </ol>
-          <p style={{ color: 'var(--theme-text-secondary)' }}>
-            The default Stash port is <strong style={{ color: 'var(--theme-text-primary)' }}>9999</strong>. Include the port in your URL unless you&apos;ve configured a reverse proxy.
+          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            Enter your server&apos;s IP address or domain name. SV3 Player will automatically handle the URL format:
           </p>
-        </section>
 
-        <section className="mb-10">
-          <h2
-            className="text-2xl font-semibold mb-4 pb-2 border-b"
-            style={{
-              color: 'var(--theme-text-primary)',
-              borderColor: 'var(--theme-control-background)',
-            }}
-          >
-            What You Can Do
-          </h2>
-          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>With Stash connected, SV3 Player gives you access to:</p>
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Local IP Addresses</h3>
+          <ul className="list-disc list-inside space-y-2 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Uses HTTP by default</li>
+            <li>Default port 9999 is added automatically if not specified</li>
+            <li>Example: <code style={{ color: 'var(--theme-accent)' }}>192.168.1.100</code> → <code style={{ color: 'var(--theme-accent)' }}>http://192.168.1.100:9999</code></li>
+          </ul>
+
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-secondary)' }}>Domain Names</h3>
           <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Scenes</strong> — Browse all your videos with thumbnails, titles, and metadata</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Performers</strong> — Filter content by performer</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Tags</strong> — Organize and filter by your tag system</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Studios</strong> — Filter by studio/source</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Ratings</strong> — See and filter by your ratings</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Favorites</strong> — Quick access to favorited content</li>
+            <li>Uses HTTPS by default (assumes you have a reverse proxy)</li>
+            <li>No port added (assumes standard HTTPS port 443)</li>
+            <li>Example: <code style={{ color: 'var(--theme-accent)' }}>stash.example.com</code> → <code style={{ color: 'var(--theme-accent)' }}>https://stash.example.com</code></li>
+          </ul>
+        </section>
+
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
+            style={{
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-success) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            Supported Features
+          </h2>
+          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            With Stash connected, you can:
+          </p>
+
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Browse & Play</h3>
+          <ul className="list-disc list-inside space-y-2 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Scenes</strong> — Browse all videos with thumbnails, titles, and metadata</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Performers</strong> — View performer profiles and filter by performer</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Tags</strong> — Access your tag system for organization and filtering</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Studios</strong> — Filter content by studio or source</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Ratings</strong> — See your ratings (1-5 stars)</li>
+          </ul>
+
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-secondary)' }}>Write-Back Support</h3>
+          <p className="mb-3" style={{ color: 'var(--theme-text-secondary)' }}>
+            Unlike other services, SV3 Player can modify your Stash library:
+          </p>
+          <ul className="list-disc list-inside space-y-2 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Edit tags</strong> — Add or remove tags from scenes while watching</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Edit performers</strong> — Add or remove performers from scenes</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Set ratings</strong> — Rate scenes directly from the player</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Track playback</strong> — Play count and duration sync back to Stash</li>
+          </ul>
+
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-accent)' }}>Sorting Options</h3>
+          <p className="mb-3" style={{ color: 'var(--theme-text-secondary)' }}>
+            Available sorting options:
+          </p>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Random</strong> — Server-side random order (refreshes each time)</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Date Added</strong> — Newest first</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Alphabetical</strong> — By title</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Rating</strong> — Highest rated first</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Duration</strong> — Longest first</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Play Count</strong> — Most played first</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Last Played</strong> — Recently watched first</li>
+          </ul>
+        </section>
+
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
+            style={{
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-warning) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            Advanced Filtering
+          </h2>
+          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            Filter your library by:
+          </p>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Tags</strong> — Include or exclude specific tags</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Performers</strong> — Include or exclude performers</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Studios</strong> — Include or exclude studios</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Rating</strong> — Minimum star rating</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Resolution</strong> — Minimum quality (SD, 720p, 1080p, 1440p, 4K)</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Duration</strong> — Maximum length</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Play Count</strong> — Minimum or maximum plays</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Orientation</strong> — Landscape or portrait</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Presence</strong> — Has tags/performers/studios or not</li>
           </ul>
         </section>
 
@@ -131,72 +247,66 @@ export default function StashGuidePage() {
               borderColor: 'var(--theme-control-background)',
             }}
           >
-            URL Formats
+            Key Details
           </h2>
-          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>SV3 Player accepts various URL formats:</p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b" style={{ borderColor: 'var(--theme-control-background)' }}>
-                  <th className="text-left py-2 pr-4 font-semibold" style={{ color: 'var(--theme-text-primary)' }}>Format</th>
-                  <th className="text-left py-2 font-semibold" style={{ color: 'var(--theme-text-primary)' }}>Example</th>
-                </tr>
-              </thead>
-              <tbody style={{ color: 'var(--theme-text-secondary)' }}>
-                <tr className="border-b" style={{ borderColor: 'var(--theme-control-background)' }}>
-                  <td className="py-2 pr-4">IP with port</td>
-                  <td className="py-2"><code className="px-1 rounded" style={{ backgroundColor: 'var(--theme-surface)', color: 'var(--theme-accent)' }}>192.168.1.100:9999</code></td>
-                </tr>
-                <tr className="border-b" style={{ borderColor: 'var(--theme-control-background)' }}>
-                  <td className="py-2 pr-4">Hostname with port</td>
-                  <td className="py-2"><code className="px-1 rounded" style={{ backgroundColor: 'var(--theme-surface)', color: 'var(--theme-accent)' }}>stash.local:9999</code></td>
-                </tr>
-                <tr className="border-b" style={{ borderColor: 'var(--theme-control-background)' }}>
-                  <td className="py-2 pr-4">Domain (with proxy)</td>
-                  <td className="py-2"><code className="px-1 rounded" style={{ backgroundColor: 'var(--theme-surface)', color: 'var(--theme-accent)' }}>stash.yourdomain.com</code></td>
-                </tr>
-                <tr>
-                  <td className="py-2 pr-4">HTTPS</td>
-                  <td className="py-2"><code className="px-1 rounded" style={{ backgroundColor: 'var(--theme-surface)', color: 'var(--theme-accent)' }}>https://stash.yourdomain.com</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            If you don&apos;t specify a protocol, SV3 Player will try HTTPS first, then fall back to HTTP.
-          </p>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Default port:</strong> 9999</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Authentication:</strong> API key</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>API Type:</strong> GraphQL</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Write support:</strong> Yes (tags, performers, ratings, playback)</li>
+          </ul>
         </section>
 
         <section className="mb-10">
           <h2
-            className="text-2xl font-semibold mb-4 pb-2 border-b"
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
             style={{
-              color: 'var(--theme-text-primary)',
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-error) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
               borderColor: 'var(--theme-control-background)',
             }}
           >
             Troubleshooting
           </h2>
 
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Connection Failed</h3>
-          <ul className="list-disc list-inside space-y-1" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Check the URL</strong> — Make sure you&apos;ve included the port (default: 9999)</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Verify network access</strong> — Your iOS device must be able to reach the server. Try accessing the Stash URL in Safari first.</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Check the API key</strong> — Regenerate it if you&apos;re unsure it&apos;s correct</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Firewall issues</strong> — Ensure port 9999 (or your custom port) is open</li>
+          <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-primary)' }}>
+            Connection Failed
+          </h3>
+          <ul className="list-disc list-inside space-y-1 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Verify your server URL includes the port (default: 9999)</li>
+            <li>Check that Stash is running and accessible</li>
+            <li>Try accessing the Stash URL in Safari first to verify network access</li>
+            <li>Regenerate your API key if you&apos;re unsure it&apos;s correct</li>
+            <li>Ensure port 9999 (or your custom port) is open in your firewall</li>
           </ul>
 
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Videos Won&apos;t Play</h3>
-          <ul className="list-disc list-inside space-y-1" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Check stream URL</strong> — Stash needs to serve video files. Verify playback works in the Stash web interface.</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Transcoding</strong> — If videos are in unusual formats, ensure Stash&apos;s transcoding is configured</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>File permissions</strong> — Stash must have read access to your video files</li>
+          <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-secondary)' }}>
+            Videos Won&apos;t Play
+          </h3>
+          <ul className="list-disc list-inside space-y-1 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Verify playback works in the Stash web interface first</li>
+            <li>Check that Stash&apos;s transcoding is configured for unusual formats</li>
+            <li>Ensure Stash has read access to your video files</li>
           </ul>
 
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Slow Loading</h3>
+          <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-accent)' }}>
+            Slow Loading
+          </h3>
+          <ul className="list-disc list-inside space-y-1 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>If Stash is still generating thumbnails, browsing may be slow initially</li>
+            <li>Enable thumbnail caching in Stash for better performance</li>
+            <li>Large libraries with many tags may take longer to load filters</li>
+          </ul>
+
+          <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-info)' }}>
+            Changes Not Syncing
+          </h3>
           <ul className="list-disc list-inside space-y-1" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Thumbnail generation</strong> — If Stash is still generating thumbnails, browsing may be slow initially</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Network speed</strong> — Large thumbnail grids require decent bandwidth. Consider enabling thumbnail caching in Stash.</li>
+            <li>Verify your API key has write permissions</li>
+            <li>Check your network connection</li>
+            <li>Try refreshing the scene in the Stash web interface</li>
           </ul>
         </section>
 
@@ -208,10 +318,11 @@ export default function StashGuidePage() {
               borderColor: 'var(--theme-control-background)',
             }}
           >
-            Multiple Stash Servers
+            Multiple Servers
           </h2>
           <p style={{ color: 'var(--theme-text-secondary)' }}>
-            You can connect multiple Stash servers to SV3 Player. Each server appears as a separate connection in Settings. Switch between them by tapping the server name in the app.
+            You can connect multiple Stash servers to SV3 Player. Each server appears as a separate connection
+            in Settings. Switch between them by selecting the server from the connections list.
           </p>
         </section>
       </div>

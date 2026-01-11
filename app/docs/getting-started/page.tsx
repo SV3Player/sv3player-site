@@ -48,10 +48,9 @@ export default function GettingStartedPage() {
             <li>
               <strong style={{ color: 'var(--theme-text-primary)' }}>A compatible media server</strong> already set up and accessible:
               <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
-                <li>Stash</li>
+                <li>Emby or Jellyfin</li>
                 <li>Plex Media Server</li>
-                <li>Emby</li>
-                <li>Jellyfin</li>
+                <li>Stash</li>
                 <li>Any GraphQL endpoint with video content</li>
               </ul>
             </li>
@@ -166,11 +165,10 @@ export default function GettingStartedPage() {
               </thead>
               <tbody style={{ color: 'var(--theme-text-secondary)' }}>
                 {[
-                  { service: 'Stash', type: 'GraphQL with API key' },
-                  { service: 'Plex', type: 'OAuth authentication' },
-                  { service: 'Emby', type: 'Username/password or API key' },
-                  { service: 'Jellyfin', type: 'Username/password or API key' },
                   { service: 'Custom GraphQL', type: 'Configurable endpoint' },
+                  { service: 'Emby & Jellyfin', type: 'Username/password or API key' },
+                  { service: 'Plex', type: 'OAuth authentication' },
+                  { service: 'Stash', type: 'GraphQL with API key' },
                 ].map((row, i, arr) => (
                   <tr
                     key={row.service}
@@ -223,23 +221,32 @@ export default function GettingStartedPage() {
             <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Test Connection</strong> to verify everything works</li>
             <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Save</strong></li>
           </ol>
-          <p style={{ color: 'var(--theme-text-secondary)' }}>
-            For detailed setup instructions, see the guide for your service:{' '}
-            {[
-              { href: '/docs/services/stash/', name: 'Stash' },
-              { href: '/docs/services/plex/', name: 'Plex' },
-              { href: '/docs/services/emby/', name: 'Emby' },
-              { href: '/docs/services/jellyfin/', name: 'Jellyfin' },
-              { href: '/docs/services/custom-graphql/', name: 'Custom GraphQL' },
-            ].map((link, i, arr) => (
-              <span key={link.href}>
-                <Link href={link.href} className="hover:underline" style={{ color: 'var(--theme-accent)' }}>
+          <div className="mt-4">
+            <p className="mb-3" style={{ color: 'var(--theme-text-secondary)' }}>
+              For detailed setup instructions, see the guide for your service:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { href: '/docs/services/custom-graphql/', name: 'Custom GraphQL' },
+                { href: '/docs/services/emby-jellyfin/', name: 'Emby & Jellyfin' },
+                { href: '/docs/services/plex/', name: 'Plex' },
+                { href: '/docs/services/stash/', name: 'Stash' },
+              ].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all hover:scale-105"
+                  style={{
+                    backgroundColor: 'var(--theme-control-background)',
+                    color: 'var(--theme-accent)',
+                    border: '1px solid var(--theme-accent)',
+                  }}
+                >
                   {link.name}
                 </Link>
-                {i < arr.length - 1 && ' · '}
-              </span>
-            ))}
-          </p>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section className="mb-10">
@@ -294,31 +301,40 @@ export default function GettingStartedPage() {
           >
             Next Steps
           </h2>
-          <ul className="space-y-2">
-            <li>
-              <strong style={{ color: 'var(--theme-text-primary)' }}>Service Guides:</strong>{' '}
-              {[
-                { href: '/docs/services/stash/', name: 'Stash' },
-                { href: '/docs/services/plex/', name: 'Plex' },
-                { href: '/docs/services/emby/', name: 'Emby' },
-                { href: '/docs/services/jellyfin/', name: 'Jellyfin' },
-                { href: '/docs/services/custom-graphql/', name: 'Custom GraphQL' },
-              ].map((link, i, arr) => (
-                <span key={link.href}>
-                  <Link href={link.href} className="hover:underline" style={{ color: 'var(--theme-accent)' }}>
+          <div className="space-y-4">
+            <div>
+              <p className="mb-3" style={{ color: 'var(--theme-text-primary)' }}>
+                <strong>Service Guides:</strong>
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { href: '/docs/services/custom-graphql/', name: 'Custom GraphQL' },
+                  { href: '/docs/services/emby-jellyfin/', name: 'Emby & Jellyfin' },
+                  { href: '/docs/services/plex/', name: 'Plex' },
+                  { href: '/docs/services/stash/', name: 'Stash' },
+                ].map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all hover:scale-105"
+                    style={{
+                      backgroundColor: 'var(--theme-control-background)',
+                      color: 'var(--theme-accent)',
+                      border: '1px solid var(--theme-accent)',
+                    }}
+                  >
                     {link.name}
                   </Link>
-                  {i < arr.length - 1 && ' · '}
-                </span>
-              ))}
-            </li>
-            <li>
+                ))}
+              </div>
+            </div>
+            <p style={{ color: 'var(--theme-text-secondary)' }}>
               <Link href="/privacy/" className="hover:underline" style={{ color: 'var(--theme-accent)' }}>
                 Privacy Policy
               </Link>
-              <span style={{ color: 'var(--theme-text-secondary)' }}> — How SV3 Player handles your data</span>
-            </li>
-          </ul>
+              {' — How SV3 Player handles your data'}
+            </p>
+          </div>
         </section>
       </div>
     </div>

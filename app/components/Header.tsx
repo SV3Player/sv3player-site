@@ -1,14 +1,19 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
 export function Header() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
+    { href: '/about/', label: 'About' },
     { href: '/docs/', label: 'Docs' },
+    { href: '/theme-creator/', label: 'Theme Creator' },
+    { href: '/support/', label: 'Support' },
     { href: '/privacy/', label: 'Privacy' },
   ];
 
@@ -30,7 +35,9 @@ export function Header() {
         >
           SV3 Player
         </Link>
-        <nav className="flex items-center gap-4">
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-4">
           {navLinks.map((link) => {
             const isActive = pathname.startsWith(link.href);
             return (
@@ -54,7 +61,72 @@ export function Header() {
           })}
           <ThemeSwitcher />
         </nav>
+
+        {/* Mobile Controls */}
+        <div className="flex md:hidden items-center gap-3">
+          <ThemeSwitcher />
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-2 rounded-lg transition-colors"
+            style={{
+              color: 'var(--theme-text-primary)',
+              backgroundColor: menuOpen ? 'var(--theme-control-background)' : 'transparent',
+            }}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <CloseIcon /> : <HamburgerIcon />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <nav
+          className="md:hidden border-t"
+          style={{
+            backgroundColor: 'var(--theme-background)',
+            borderColor: 'var(--theme-control-background)',
+          }}
+        >
+          {navLinks.map((link) => {
+            const isActive = pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="block px-4 py-3 text-sm transition-colors border-b"
+                style={{
+                  color: isActive ? 'var(--theme-accent)' : 'var(--theme-text-secondary)',
+                  borderColor: 'var(--theme-control-background)',
+                  backgroundColor: isActive ? 'var(--theme-surface)' : 'transparent',
+                }}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </nav>
+      )}
     </header>
+  );
+}
+
+function HamburgerIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
   );
 }

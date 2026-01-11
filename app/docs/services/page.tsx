@@ -7,11 +7,10 @@ export const metadata: Metadata = {
 };
 
 const services = [
-  { href: '/docs/services/stash/', name: 'Stash', port: '9999', auth: 'API Key', api: 'GraphQL', desc: 'Connect to your Stash media organizer. Full support for scenes, performers, tags, studios, and ratings. Requires an API key from your Stash settings.' },
-  { href: '/docs/services/plex/', name: 'Plex', port: '32400', auth: 'OAuth (Plex account)', api: 'REST', desc: "Connect to Plex Media Server using your Plex account. Sign in through Plex's secure OAuth flow — no API keys to manage." },
-  { href: '/docs/services/emby/', name: 'Emby', port: '8096', auth: 'Username/Password or API Key', api: 'REST', desc: 'Connect to your Emby server with username/password or API key authentication. Browse libraries, search content, and stream with transcoding support.' },
-  { href: '/docs/services/jellyfin/', name: 'Jellyfin', port: '8096', auth: 'Username/Password or API Key', api: 'REST', desc: 'Connect to the open-source Jellyfin media server. Similar to Emby with username/password or API key authentication.' },
   { href: '/docs/services/custom-graphql/', name: 'Custom GraphQL', port: 'Varies', auth: 'Configurable', api: 'GraphQL', desc: 'Connect to any GraphQL endpoint that serves video content. Configure custom queries and field mappings for non-standard servers.' },
+  { href: '/docs/services/emby-jellyfin/', name: 'Emby & Jellyfin', port: '7359', auth: 'Username/Password or API Key', api: 'REST', desc: 'Connect to your Emby or Jellyfin media server. Both use a unified setup process with username/password or API key authentication.' },
+  { href: '/docs/services/plex/', name: 'Plex', port: '32400', auth: 'OAuth (Plex account)', api: 'REST', desc: "Connect to Plex Media Server using your Plex account. Sign in through Plex's secure OAuth flow — no API keys to manage." },
+  { href: '/docs/services/stash/', name: 'Stash', port: '9999', auth: 'API Key', api: 'GraphQL', desc: 'Connect to your Stash media organizer. Full support for scenes, performers, tags, studios, and ratings. Requires an API key from your Stash settings.' },
 ];
 
 export default function ServicesPage() {
@@ -95,13 +94,20 @@ export default function ServicesPage() {
           <div className="space-y-6">
             {services.map((service, i) => {
               const colors = ['var(--theme-primary)', 'var(--theme-secondary)', 'var(--theme-accent)', 'var(--theme-info)', 'var(--theme-warning)'];
+              const color = colors[i % colors.length];
               return (
                 <div key={service.name}>
-                  <h3 className="text-xl font-medium mb-2">
-                    <Link href={service.href} className="hover:underline" style={{ color: colors[i % colors.length] }}>
-                      {service.name}
-                    </Link>
-                  </h3>
+                  <Link
+                    href={service.href}
+                    className="inline-block px-4 py-2 rounded-lg text-base font-semibold mb-2 transition-all hover:scale-105"
+                    style={{
+                      backgroundColor: 'var(--theme-control-background)',
+                      color: color,
+                      border: `1px solid ${color}`,
+                    }}
+                  >
+                    {service.name}
+                  </Link>
                   <p style={{ color: 'var(--theme-text-secondary)' }}>{service.desc}</p>
                 </div>
               );

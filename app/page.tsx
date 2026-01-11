@@ -165,11 +165,11 @@ export default function Home() {
                   </thead>
                   <tbody style={{ color: 'var(--theme-text-secondary)' }}>
                     {[
-                      { name: 'Stash', desc: 'Full GraphQL support with scenes, performers, tags, and studios' },
-                      { name: 'Plex', desc: 'Browse libraries and stream from your Plex Media Server' },
+                      { name: 'Custom GraphQL', desc: 'Connect any compatible endpoint with configurable mappings' },
                       { name: 'Emby', desc: 'Complete library access with filtering and search' },
                       { name: 'Jellyfin', desc: 'Open-source server support with full feature parity' },
-                      { name: 'Custom GraphQL', desc: 'Connect any compatible endpoint with configurable mappings' },
+                      { name: 'Plex', desc: 'Browse libraries and stream from your Plex Media Server' },
+                      { name: 'Stash', desc: 'Full GraphQL support with scenes, performers, tags, and studios' },
                     ].map((service, i, arr) => (
                       <tr
                         key={service.name}

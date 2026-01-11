@@ -76,6 +76,25 @@ export default function DocsPage() {
                 Detailed instructions for each supported service
               </p>
             </Link>
+
+            <Link
+              href="/docs/settings/"
+              className="block p-4 rounded-lg transition-all hover:scale-[1.02]"
+              style={{
+                backgroundColor: 'var(--theme-surface)',
+                border: '1px solid var(--theme-control-background)',
+              }}
+            >
+              <h3
+                className="font-semibold text-lg mb-1"
+                style={{ color: 'var(--theme-accent)' }}
+              >
+                Settings
+              </h3>
+              <p style={{ color: 'var(--theme-text-secondary)' }} className="text-sm">
+                Privacy, security, and appearance options
+              </p>
+            </Link>
           </div>
         </section>
 
@@ -89,19 +108,22 @@ export default function DocsPage() {
           >
             Supported Services
           </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="flex flex-wrap gap-2">
             {[
-              { href: '/docs/services/stash/', name: 'Stash' },
-              { href: '/docs/services/plex/', name: 'Plex' },
-              { href: '/docs/services/emby/', name: 'Emby' },
-              { href: '/docs/services/jellyfin/', name: 'Jellyfin' },
               { href: '/docs/services/custom-graphql/', name: 'Custom GraphQL' },
+              { href: '/docs/services/emby-jellyfin/', name: 'Emby & Jellyfin' },
+              { href: '/docs/services/plex/', name: 'Plex' },
+              { href: '/docs/services/stash/', name: 'Stash' },
             ].map((service) => (
               <Link
                 key={service.href}
                 href={service.href}
-                className="hover:underline transition-colors"
-                style={{ color: 'var(--theme-accent)' }}
+                className="px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105"
+                style={{
+                  backgroundColor: 'var(--theme-control-background)',
+                  color: 'var(--theme-accent)',
+                  border: '1px solid var(--theme-accent)',
+                }}
               >
                 {service.name}
               </Link>

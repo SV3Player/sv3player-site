@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Plex Setup Guide - SV3 Player",
-  description: "Connect SV3 Player to your Plex Media Server using secure OAuth authentication.",
+  title: "Emby & Jellyfin Setup Guide - SV3 Player",
+  description: "Connect SV3 Player to your Emby or Jellyfin media server.",
 };
 
-export default function PlexGuidePage() {
+export default function EmbyJellyfinGuidePage() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--theme-background)' }}>
       <div className="container mx-auto px-4 py-12 max-w-3xl">
@@ -15,7 +15,7 @@ export default function PlexGuidePage() {
           <span className="mx-2" style={{ color: 'var(--theme-text-tertiary)' }}>/</span>
           <Link href="/docs/services/" className="hover:underline" style={{ color: 'var(--theme-accent)' }}>Services</Link>
           <span className="mx-2" style={{ color: 'var(--theme-text-tertiary)' }}>/</span>
-          <span style={{ color: 'var(--theme-text-secondary)' }}>Plex</span>
+          <span style={{ color: 'var(--theme-text-secondary)' }}>Emby & Jellyfin</span>
         </nav>
 
         <h1
@@ -27,10 +27,10 @@ export default function PlexGuidePage() {
             backgroundClip: 'text',
           }}
         >
-          Plex
+          Emby & Jellyfin
         </h1>
         <p className="mb-8 text-lg" style={{ color: 'var(--theme-text-secondary)' }}>
-          Connect to Plex Media Server using your Plex account. Sign in through Plex&apos;s secure OAuth flow — no API keys to manage.
+          Connect to your Emby or Jellyfin media server using username/password or API key authentication.
         </p>
 
         <section className="mb-10">
@@ -47,12 +47,12 @@ export default function PlexGuidePage() {
             Overview
           </h2>
           <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            Plex uses OAuth authentication through your plex.tv account. Instead of entering server URLs and API keys,
-            you&apos;ll sign in with a one-time PIN code and then select your server from a list.
+            Emby and Jellyfin share a similar API structure, so SV3 Player uses a unified setup process for both.
+            Jellyfin is an open-source fork of Emby, which is why they work almost identically.
           </p>
           <p style={{ color: 'var(--theme-text-secondary)' }}>
-            This approach is more secure — your Plex password is never entered into SV3 Player. The app receives
-            an access token directly from Plex after you authorize it.
+            Both servers support two authentication methods: username/password (recommended for most users)
+            or API key (useful for automation or when you don&apos;t want to use your account credentials).
           </p>
         </section>
 
@@ -72,11 +72,10 @@ export default function PlexGuidePage() {
           <ol className="list-decimal list-inside space-y-3" style={{ color: 'var(--theme-text-secondary)' }}>
             <li>Open SV3 Player and go to <strong style={{ color: 'var(--theme-text-primary)' }}>Settings</strong> → <strong style={{ color: 'var(--theme-text-primary)' }}>Service Connections</strong></li>
             <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Add Connection</strong></li>
-            <li>Select <strong style={{ color: 'var(--theme-text-primary)' }}>Plex</strong></li>
-            <li>Copy the 4-character PIN shown in the app</li>
-            <li>Go to <strong style={{ color: 'var(--theme-text-primary)' }}>plex.tv/link</strong> and enter the PIN</li>
-            <li>Select your server from the list</li>
-            <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Save & Connect</strong></li>
+            <li>Select <strong style={{ color: 'var(--theme-text-primary)' }}>Emby</strong> or <strong style={{ color: 'var(--theme-text-primary)' }}>Jellyfin</strong></li>
+            <li>Enter your server URL</li>
+            <li>Choose your authentication method and enter credentials</li>
+            <li>Tap <strong style={{ color: 'var(--theme-text-primary)' }}>Connect</strong> to test, then <strong style={{ color: 'var(--theme-text-primary)' }}>Save</strong></li>
           </ol>
         </section>
 
@@ -91,29 +90,25 @@ export default function PlexGuidePage() {
               borderColor: 'var(--theme-control-background)',
             }}
           >
-            Authentication Flow
+            Server URL
           </h2>
           <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            Plex authentication uses a PIN-based OAuth flow that keeps your credentials secure:
+            Enter your server&apos;s IP address or domain name. SV3 Player will automatically handle the URL format:
           </p>
 
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Step 1: Generate PIN</h3>
-          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            When you tap <strong style={{ color: 'var(--theme-text-primary)' }}>Sign in with Plex</strong>, the app generates
-            a 4-character code and displays it on screen. This code expires after a few minutes.
-          </p>
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Local IP Addresses</h3>
+          <ul className="list-disc list-inside space-y-2 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Uses HTTP by default</li>
+            <li>Default port 7359 is added automatically if not specified</li>
+            <li>Example: <code style={{ color: 'var(--theme-accent)' }}>192.168.1.100</code> → <code style={{ color: 'var(--theme-accent)' }}>http://192.168.1.100:7359</code></li>
+          </ul>
 
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-secondary)' }}>Step 2: Authorize</h3>
-          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            Visit <strong style={{ color: 'var(--theme-text-primary)' }}>plex.tv/link</strong> in any browser (the app provides
-            a button to open this page). Enter your PIN and sign in with your Plex account to authorize SV3 Player.
-          </p>
-
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-accent)' }}>Step 3: Automatic Connection</h3>
-          <p style={{ color: 'var(--theme-text-secondary)' }}>
-            The app automatically detects when you&apos;ve authorized it and proceeds to the next step. No need to
-            return to the app and tap anything — it happens automatically.
-          </p>
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-secondary)' }}>Domain Names</h3>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Uses HTTPS by default (assumes you have a reverse proxy)</li>
+            <li>No port added (assumes standard HTTPS port 443)</li>
+            <li>Example: <code style={{ color: 'var(--theme-accent)' }}>media.example.com</code> → <code style={{ color: 'var(--theme-accent)' }}>https://media.example.com</code></li>
+          </ul>
         </section>
 
         <section className="mb-10">
@@ -127,25 +122,33 @@ export default function PlexGuidePage() {
               borderColor: 'var(--theme-control-background)',
             }}
           >
-            Plex Home
+            Authentication Methods
           </h2>
           <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            If you have a Plex Home with multiple user profiles, SV3 Player will ask you to select which profile
-            to use after signing in.
+            Choose between two authentication methods using the toggle in the app:
           </p>
 
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>User Selection</h3>
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Username & Password</h3>
           <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            After authentication, you&apos;ll see a list of all users in your Plex Home. Select the profile you want
-            to use with SV3 Player.
+            Log in with your Emby or Jellyfin account credentials. This is the simplest method for most users.
           </p>
+          <ul className="list-disc list-inside space-y-2 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Enter your username and password</li>
+            <li>SV3 Player exchanges them for an access token</li>
+            <li>Your password is not stored — only the token is saved</li>
+          </ul>
 
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-secondary)' }}>PIN-Protected Profiles</h3>
+          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-secondary)' }}>API Key</h3>
           <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            Some Plex Home profiles are protected with a PIN. If you select a protected profile, you&apos;ll be prompted
-            to enter that profile&apos;s PIN to continue.
+            Use a server-generated API key for authentication. Useful if you prefer not to use your account credentials.
           </p>
-
+          <p className="mb-3" style={{ color: 'var(--theme-text-secondary)' }}>
+            To create an API key:
+          </p>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Emby:</strong> Settings → Advanced → API Keys</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Jellyfin:</strong> Dashboard → Advanced → API Keys</li>
+          </ul>
           <div
             className="p-4 rounded-lg mt-4"
             style={{
@@ -154,8 +157,21 @@ export default function PlexGuidePage() {
             }}
           >
             <p className="text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
-              <strong style={{ color: 'var(--theme-info)' }}>Note:</strong> If your Plex Home has only one user, the
-              app skips the selection screen and proceeds directly to server discovery.
+              <strong style={{ color: 'var(--theme-info)' }}>Tip:</strong> SV3 Player includes an &quot;Open Settings&quot; button
+              that opens your server&apos;s API key settings page directly in a browser.
+            </p>
+          </div>
+          <div
+            className="p-4 rounded-lg mt-4"
+            style={{
+              backgroundColor: 'var(--theme-surface)',
+              border: '1px solid var(--theme-warning)',
+            }}
+          >
+            <p className="text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
+              <strong style={{ color: 'var(--theme-warning)' }}>Note:</strong> Mobile browsers may not allow copying API keys
+              directly from the Emby or Jellyfin web interface. If you can&apos;t copy the key, try accessing your server&apos;s
+              dashboard from a desktop browser, or manually type the key.
             </p>
           </div>
         </section>
@@ -171,24 +187,18 @@ export default function PlexGuidePage() {
               borderColor: 'var(--theme-control-background)',
             }}
           >
-            Server Selection
+            Connection Test
           </h2>
           <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            After authentication, SV3 Player discovers all Plex servers available to your account. This includes:
+            When you tap <strong style={{ color: 'var(--theme-text-primary)' }}>Connect</strong>, SV3 Player tests the connection and displays:
           </p>
-          <ul className="list-disc list-inside space-y-2 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li>Servers you own</li>
-            <li>Servers shared with you by other Plex users</li>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Server Name</strong> — Your server&apos;s configured name</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Version</strong> — The Emby or Jellyfin version running</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Server ID</strong> — Unique identifier for your server</li>
           </ul>
-          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            Select the server you want to connect to. The app will verify the connection before saving.
-          </p>
-
-          <h3 className="text-xl font-medium mb-3 mt-6" style={{ color: 'var(--theme-primary)' }}>Connection Priority</h3>
-          <p style={{ color: 'var(--theme-text-secondary)' }}>
-            When connecting to your server, SV3 Player prefers local network connections over remote access.
-            If you&apos;re on the same network as your Plex server, the app will use the direct local connection
-            for better performance.
+          <p className="mt-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            If the test succeeds, tap <strong style={{ color: 'var(--theme-text-primary)' }}>Save & Connect</strong> to store your credentials and start browsing.
           </p>
         </section>
 
@@ -211,25 +221,6 @@ export default function PlexGuidePage() {
             <li>Stream with transcoding support</li>
             <li>View metadata (titles, descriptions, thumbnails)</li>
             <li>Access tags and genres</li>
-            <li>Filter by various criteria</li>
-          </ul>
-        </section>
-
-        <section className="mb-10">
-          <h2
-            className="text-2xl font-semibold mb-4 pb-2 border-b"
-            style={{
-              color: 'var(--theme-text-primary)',
-              borderColor: 'var(--theme-control-background)',
-            }}
-          >
-            Key Details
-          </h2>
-          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Default port:</strong> 32400</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Authentication:</strong> OAuth via plex.tv</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>HTTPS:</strong> Required</li>
-            <li><strong style={{ color: 'var(--theme-text-primary)' }}>API Type:</strong> REST</li>
           </ul>
         </section>
 
@@ -248,39 +239,32 @@ export default function PlexGuidePage() {
           </h2>
 
           <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-primary)' }}>
-            PIN Expired
-          </h3>
-          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            PINs are valid for a limited time. If yours expires before you can enter it at plex.tv/link,
-            tap <strong style={{ color: 'var(--theme-text-primary)' }}>Generate New PIN</strong> to get a fresh code.
-          </p>
-
-          <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-secondary)' }}>
-            No Servers Found
+            Connection Failed
           </h3>
           <ul className="list-disc list-inside space-y-1 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li>Verify your Plex Media Server is running</li>
-            <li>Check that you&apos;re signed into the correct Plex account</li>
-            <li>Ensure your server is claimed and linked to your Plex account</li>
-            <li>If using a shared server, confirm the owner hasn&apos;t revoked access</li>
+            <li>Verify your server URL is correct</li>
+            <li>Check that your server is running and accessible</li>
+            <li>Ensure your device is on the same network (for local connections)</li>
+            <li>Try specifying the port explicitly if using a non-standard port</li>
+          </ul>
+
+          <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-secondary)' }}>
+            Authentication Failed
+          </h3>
+          <ul className="list-disc list-inside space-y-1 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Double-check your username and password</li>
+            <li>Verify the API key is valid and hasn&apos;t been revoked</li>
+            <li>Ensure your user account has permission to access video libraries</li>
           </ul>
 
           <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-accent)' }}>
-            Server Verification Failed
+            Videos Not Playing
           </h3>
-          <ul className="list-disc list-inside space-y-1 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-            <li>Check that your Plex server is online and accessible</li>
-            <li>If connecting remotely, ensure remote access is enabled in your Plex server settings</li>
-            <li>Verify your firewall isn&apos;t blocking port 32400</li>
+          <ul className="list-disc list-inside space-y-1" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Check that transcoding is enabled on your server</li>
+            <li>Verify the video format is supported</li>
+            <li>Try a lower quality setting to test if it&apos;s a bandwidth issue</li>
           </ul>
-
-          <h3 className="text-lg font-medium mb-2 mt-6" style={{ color: 'var(--theme-info)' }}>
-            Plex Home PIN Incorrect
-          </h3>
-          <p style={{ color: 'var(--theme-text-secondary)' }}>
-            This is the PIN for the specific Plex Home profile, not your plex.tv account password.
-            The profile PIN is set in Plex&apos;s account settings under Users & Sharing.
-          </p>
         </section>
       </div>
     </div>

@@ -347,3 +347,180 @@ export const defaultTheme = themes[0]; // Ocean Depths
 export function getThemeById(id: string): Theme | undefined {
   return themes.find((t) => t.id === id);
 }
+
+// === iOS Theme Export/Import Helpers ===
+
+// Convert any color format (rgba, rgb, hex) to #RRGGBB hex
+export function colorToHex(color: string): string {
+  // Already hex format
+  if (color.startsWith('#')) {
+    // Ensure 6 digits
+    const hex = color.slice(1);
+    if (hex.length === 3) {
+      return `#${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`.toUpperCase();
+    }
+    return color.toUpperCase();
+  }
+
+  // Parse rgba or rgb
+  const rgbaMatch = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+  if (rgbaMatch) {
+    const r = parseInt(rgbaMatch[1]).toString(16).padStart(2, '0');
+    const g = parseInt(rgbaMatch[2]).toString(16).padStart(2, '0');
+    const b = parseInt(rgbaMatch[3]).toString(16).padStart(2, '0');
+    return `#${r}${g}${b}`.toUpperCase();
+  }
+
+  return color.toUpperCase();
+}
+
+// iOS theme export format interface
+export interface iOSThemeFormat {
+  id: string;
+  name: string;
+  description: string;
+  _comment_primary?: string;
+  primary: string;
+  secondary: string;
+  accent: string;
+  _comment_background?: string;
+  background: string;
+  surface: string;
+  gradientStart: string;
+  gradientEnd: string;
+  _comment_text?: string;
+  textPrimary: string;
+  textSecondary: string;
+  textTertiary: string;
+  _comment_glass?: string;
+  glassEffectTint: string;
+  glassFillOpacity: number;
+  glassBorderOpacity: number;
+  backgroundNoiseOpacity: number;
+  _comment_controls?: string;
+  controlBackground: string;
+  controlForeground: string;
+  _comment_status?: string;
+  success: string;
+  warning: string;
+  error: string;
+  info: string;
+  _comment_accents?: string;
+  accentGlow: string;
+  interactiveHighlight: string;
+}
+
+// Convert web Theme to iOS flat JSON format
+export function themeToiOSFormat(theme: Theme): iOSThemeFormat {
+  return {
+    id: theme.id,
+    name: theme.name,
+    description: theme.description,
+
+    _comment_primary: 'Primary colors define the main visual identity',
+    primary: colorToHex(theme.colors.primary),
+    secondary: colorToHex(theme.colors.secondary),
+    accent: colorToHex(theme.colors.accent),
+
+    _comment_background: 'Background colors for app surfaces',
+    background: colorToHex(theme.colors.background),
+    surface: colorToHex(theme.colors.surface),
+    gradientStart: colorToHex(theme.colors.gradientStart),
+    gradientEnd: colorToHex(theme.colors.gradientEnd),
+
+    _comment_text: 'Text colors for different emphasis levels',
+    textPrimary: colorToHex(theme.colors.textPrimary),
+    textSecondary: colorToHex(theme.colors.textSecondary),
+    textTertiary: colorToHex(theme.colors.textTertiary),
+
+    _comment_glass: 'Glass effect customization',
+    glassEffectTint: colorToHex(theme.colors.glassEffectTint),
+    glassFillOpacity: theme.effects.glassFillOpacity,
+    glassBorderOpacity: theme.effects.glassBorderOpacity,
+    backgroundNoiseOpacity: theme.effects.backgroundNoiseOpacity,
+
+    _comment_controls: 'Interactive element colors',
+    controlBackground: colorToHex(theme.colors.controlBackground),
+    controlForeground: colorToHex(theme.colors.controlForeground),
+
+    _comment_status: 'Semantic colors for states',
+    success: colorToHex(theme.colors.success),
+    warning: colorToHex(theme.colors.warning),
+    error: colorToHex(theme.colors.error),
+    info: colorToHex(theme.colors.info),
+
+    _comment_accents: 'Special effect colors',
+    accentGlow: colorToHex(theme.colors.accentGlow),
+    interactiveHighlight: colorToHex(theme.colors.interactiveHighlight),
+  };
+}
+
+// Convert iOS flat format to web Theme
+export function iOSFormatToTheme(ios: iOSThemeFormat): Theme {
+  return {
+    id: ios.id,
+    name: ios.name,
+    description: ios.description,
+    colors: {
+      primary: ios.primary,
+      secondary: ios.secondary,
+      accent: ios.accent,
+      background: ios.background,
+      surface: ios.surface,
+      textPrimary: ios.textPrimary,
+      textSecondary: ios.textSecondary,
+      textTertiary: ios.textTertiary,
+      controlBackground: ios.controlBackground,
+      controlForeground: ios.controlForeground,
+      glassEffectTint: ios.glassEffectTint,
+      success: ios.success,
+      warning: ios.warning,
+      error: ios.error,
+      info: ios.info,
+      gradientStart: ios.gradientStart,
+      gradientEnd: ios.gradientEnd,
+      accentGlow: ios.accentGlow,
+      interactiveHighlight: ios.interactiveHighlight,
+    },
+    effects: {
+      glassFillOpacity: ios.glassFillOpacity,
+      glassBorderOpacity: ios.glassBorderOpacity,
+      backgroundNoiseOpacity: ios.backgroundNoiseOpacity,
+    },
+  };
+}
+
+// Create a blank/default theme for the creator
+export function createBlankTheme(): Theme {
+  return {
+    id: `custom-${Date.now()}`,
+    name: 'My Custom Theme',
+    description: 'A custom theme created with Theme Creator',
+    colors: {
+      primary: '#00B3B3',
+      secondary: '#33CCCC',
+      accent: '#00E6E6',
+      background: '#051F1F',
+      surface: '#0D3340',
+      textPrimary: '#FFFFFF',
+      textSecondary: '#E6E6E6',
+      textTertiary: '#B3B3B3',
+      controlBackground: '#1A4D59',
+      controlForeground: '#CCF2FF',
+      glassEffectTint: '#00B3B3',
+      success: '#00CC99',
+      warning: '#FFB300',
+      error: '#E64D4D',
+      info: '#00B3B3',
+      gradientStart: '#0D3340',
+      gradientEnd: '#051F1F',
+      accentGlow: '#00E6E6',
+      interactiveHighlight: '#33CCCC',
+    },
+    effects: {
+      glassFillOpacity: 0.15,
+      glassBorderOpacity: 0.35,
+      backgroundNoiseOpacity: 0.04,
+    },
+  };
+}

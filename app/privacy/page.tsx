@@ -7,90 +7,146 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-3xl">
-      <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-      <p className="text-gray-500 dark:text-gray-400 mb-8">Last updated: January 1, 2025</p>
+    <div
+      className="min-h-screen"
+      style={{ backgroundColor: 'var(--theme-background)' }}
+    >
+      <div className="container mx-auto px-4 py-12 max-w-3xl">
+        <h1
+          className="text-4xl font-bold mb-2 inline-block"
+          style={{
+            background: 'linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-accent) 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
+        >
+          Privacy Policy
+        </h1>
+        <p className="mb-8" style={{ color: 'var(--theme-text-tertiary)' }}>Last updated: January 11, 2025</p>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Overview</h2>
-        <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-          SV3 Player is designed with privacy in mind. We do not collect, store, or transmit any of your personal data to external servers.
-        </p>
-      </section>
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
+            style={{
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-primary) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            The Short Version
+          </h2>
+          <p style={{ color: 'var(--theme-text-secondary)' }}>
+            SV3 Player has no servers. We don&apos;t collect any data. Everything stays on your device or goes directly to your own media servers.
+          </p>
+        </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Data Storage</h2>
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
+            style={{
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-secondary) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            What&apos;s Stored on Your Device
+          </h2>
+          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            The app stores some information locally to function:
+          </p>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Server credentials</strong> — URLs and authentication tokens for your media servers, stored in the iOS Keychain</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>App settings</strong> — Theme, display preferences, and configuration options</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Thumbnail cache</strong> — Optional cached images to improve browsing performance</li>
+          </ul>
+          <p className="mt-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            None of this leaves your device. You can clear all stored data by deleting the app.
+          </p>
+        </section>
 
-        <h3 className="text-xl font-medium mb-3 mt-6">Local Storage Only</h3>
-        <p className="text-gray-600 dark:text-gray-400 mb-3">All data is stored locally on your device:</p>
-        <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 mb-6">
-          <li>Server credentials are stored in the iOS Keychain</li>
-          <li>App preferences are stored in UserDefaults</li>
-          <li>No data is sent to SV3 Player servers (we don&apos;t have any)</li>
-        </ul>
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
+            style={{
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-accent) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            Network Communication
+          </h2>
+          <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            SV3 Player only communicates with:
+          </p>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Your media servers</strong> — Stash, Plex, Emby, Jellyfin, or custom GraphQL endpoints you configure</li>
+            <li><strong style={{ color: 'var(--theme-text-primary)' }}>Apple</strong> — App Store for updates and optional tips</li>
+          </ul>
+          <p className="mt-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            All communication with your servers happens directly from your device. We have no visibility into what you watch, browse, or stream.
+          </p>
+        </section>
 
-        <h3 className="text-xl font-medium mb-3">What We Store</h3>
-        <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 mb-6">
-          <li>Server URLs and authentication tokens for your media servers</li>
-          <li>App preferences (theme, display settings)</li>
-          <li>Optional: Cached thumbnails for performance</li>
-        </ul>
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b inline-block w-full"
+            style={{
+              background: 'linear-gradient(90deg, var(--theme-text-primary) 0%, var(--theme-info) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            What We Don&apos;t Have
+          </h2>
+          <ul className="list-disc list-inside space-y-2" style={{ color: 'var(--theme-text-secondary)' }}>
+            <li>Servers</li>
+            <li>Analytics</li>
+            <li>User accounts</li>
+            <li>Tracking</li>
+            <li>Ads</li>
+          </ul>
+        </section>
 
-        <h3 className="text-xl font-medium mb-3">What We Don&apos;t Store</h3>
-        <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
-          <li>Video content</li>
-          <li>Watch history (stored on your media servers, not in the app)</li>
-          <li>Personal information</li>
-          <li>Analytics or usage data</li>
-        </ul>
-      </section>
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b"
+            style={{
+              color: 'var(--theme-text-primary)',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            Changes to This Policy
+          </h2>
+          <p style={{ color: 'var(--theme-text-secondary)' }}>
+            If this policy changes, updates will be posted here with a new date.
+          </p>
+        </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Third-Party Services</h2>
-        <p className="text-gray-600 dark:text-gray-400 mb-3">
-          SV3 Player connects directly to your configured media servers:
-        </p>
-        <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 mb-4">
-          <li>Stash</li>
-          <li>Plex</li>
-          <li>Emby</li>
-          <li>Jellyfin</li>
-          <li>Custom GraphQL endpoints</li>
-        </ul>
-        <p className="text-gray-600 dark:text-gray-400">
-          Your credentials and data are transmitted directly between your device and your servers. We have no visibility into this communication.
-        </p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Network Communication</h2>
-        <p className="text-gray-600 dark:text-gray-400 mb-3">The app only communicates with:</p>
-        <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-1">
-          <li>Your configured media servers (to fetch and stream content)</li>
-          <li>Apple&apos;s App Store (for app updates and optional tips)</li>
-        </ol>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Children&apos;s Privacy</h2>
-        <p className="text-gray-600 dark:text-gray-400">
-          SV3 Player is not directed at children under 17. We do not knowingly collect information from children.
-        </p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Changes to This Policy</h2>
-        <p className="text-gray-600 dark:text-gray-400">
-          We may update this privacy policy from time to time. Changes will be posted on this page with an updated revision date.
-        </p>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Contact</h2>
-        <p className="text-gray-600 dark:text-gray-400">
-          If you have questions about this privacy policy, please open an issue on our GitLab repository.
-        </p>
-      </section>
+        <section>
+          <h2
+            className="text-2xl font-semibold mb-4 pb-2 border-b"
+            style={{
+              color: 'var(--theme-text-primary)',
+              borderColor: 'var(--theme-control-background)',
+            }}
+          >
+            Contact
+          </h2>
+          <p style={{ color: 'var(--theme-text-secondary)' }}>
+            Questions? Visit our{' '}
+            <a href="/support/" className="hover:underline" style={{ color: 'var(--theme-accent)' }}>support page</a>.
+          </p>
+        </section>
+      </div>
     </div>
   );
 }
