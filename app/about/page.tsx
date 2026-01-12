@@ -13,12 +13,12 @@ const team = [
   },
   {
     name: "Professor Otto Von Schnitzelpusskrankengeschitmeyer",
-    role: "Project Lead",
+    role: "Project Lead (Cat)",
     bio: "Oversees all operations from a sunny windowsill. Ensures code reviews happen at 3 AM by walking across the keyboard. Firm believer that every function could use more naps.",
   },
   {
     name: "Tism",
-    role: "HR & Break Enforcement",
+    role: "HR & Break Enforcement (Cat)",
     bio: "Demands breaks at regular intervals. Specializes in loud, insistent reminders that lunch is overdue. Has never once approved a crunch period.",
   },
 ];
