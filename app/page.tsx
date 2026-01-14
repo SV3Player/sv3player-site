@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnimatedGlassBackground } from "./components/AnimatedGlassBackground";
+import { config } from "./lib/config";
 
 export default function Home() {
   return (
@@ -235,12 +236,21 @@ export default function Home() {
               >
                 Get the App
               </h2>
-              <p style={{ color: 'var(--theme-text-secondary)' }} className="mb-4">
+              <p style={{ color: 'var(--theme-text-secondary)' }} className="mb-6">
                 SV3 Player is available for iPhone and iPad.
               </p>
-              <p style={{ color: 'var(--theme-text-tertiary)' }} className="italic">
-                Coming soon to the App Store.
-              </p>
+              <a
+                href={config.appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-transform hover:scale-105"
+              >
+                <img
+                  src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83"
+                  alt="Download on the App Store"
+                  style={{ height: '54px' }}
+                />
+              </a>
             </section>
 
             <hr style={{ borderColor: 'var(--theme-control-background)' }} className="my-12" />

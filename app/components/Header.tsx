@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeSwitcher } from './ThemeSwitcher';
+import { config } from '../lib/config';
 
 export function Header() {
   const pathname = usePathname();
@@ -59,6 +60,19 @@ export function Header() {
               </Link>
             );
           })}
+          <a
+            href={config.appStoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-2 px-3 py-1.5 text-sm font-medium rounded-lg transition-all hover:scale-105"
+            style={{
+              background: 'linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-accent) 100%)',
+              color: 'var(--theme-text-primary)',
+              boxShadow: '0 2px 8px var(--theme-accent-glow)',
+            }}
+          >
+            Download
+          </a>
           <ThemeSwitcher />
         </nav>
 
@@ -106,6 +120,19 @@ export function Header() {
               </Link>
             );
           })}
+          <a
+            href={config.appStoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            className="block px-4 py-3 text-sm font-medium"
+            style={{
+              background: 'linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-accent) 100%)',
+              color: 'var(--theme-text-primary)',
+            }}
+          >
+            ⬇ Download on App Store
+          </a>
         </nav>
       )}
     </header>
