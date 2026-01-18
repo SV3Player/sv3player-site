@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import createMDX from '@next/mdx';
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true,
